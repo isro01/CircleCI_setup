@@ -31,8 +31,8 @@ jobs:
     
     steps:
       - checkout
-      - run echo "One more h1 th3r3"
-      - run sleep 15
+      - run: echo "One more h1 th3r3"
+      - run: sleep 15
 
 workflows:
   version: 2
