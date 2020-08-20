@@ -23,7 +23,12 @@ jobs:
     steps:
       - checkout
       - run: echo "A first h3ll0"
-      - run: sleep 10
+      - run: mkdir -p my_ws
+      - run: echo "Trying out workspaces" > my_ws/echo-output
+      - persist_to_workspace:
+          root: my_ws
+          paths:
+            - echo-output
   
   two:
     docker:
@@ -32,11 +37,20 @@ jobs:
     steps:
       - checkout
       - run: echo "One more h1 th3r3"
-      - run: sleep 15
+      - attach_workspace:
+          at: my_ws
+
+      - run: |
+          if [[ $(cat my_ws/echo-output) == "Trying out workspaces" ]]; then echo "It worked!";
+          else
+            echo "Nope!"; exit 1
+          fi
 
 workflows:
   version: 2
   one_and_two:
     jobs:
       - one
-      - two
+      - two:
+          requires:
+            -one
