@@ -37,8 +37,7 @@ class CustomWindPlugin : public ModelPlugin {
             , speed(speed){};
 
         // comparison operator to check hash collisions
-        bool operator==(const WindParams& wind_params) const {
-            return (angle == wind_params.angle) && (speed == wind_params.speed);
+        bool operator==(const WindParams& wind_params) const {return (angle == wind_params.angle) && (speed == wind_params.speed);
         }
     } WindParams;
 
