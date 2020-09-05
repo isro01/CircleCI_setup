@@ -17,8 +17,8 @@
 
 namespace gazebo {
 
-static const std::string kDefualtFrameId = "world";
-static const std::string kDefaultLinkName = "base_link";
+static const std::string kdefualtFrameId = "world";
+static const std::string kdefaultLinkName = "base_link";
 
 class CustomWindPlugin : public ModelPlugin {
   public:
