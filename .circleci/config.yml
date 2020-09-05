@@ -12,14 +12,14 @@ jobs:
         
     run_cpplint:
       docker:
-        - image: ishirroongta/cpplint_test:0.3
+        - image: ubuntu:18.04
     
       steps:
         - checkout
-        # - run: ls -a
-        # - run: "apt-get update -y"
-        # - run: "apt-get install -y python-pip"
-        # - run: "python -m pip install cpplint"
+        - run: ls -a
+        - run: "apt-get update -y"
+        - run: "apt-get install -y python-pip"
+        - run: "python -m pip install cpplint"
         - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment,-readability/braces,-build/include_order,-build/c++11,-build/include_what_you_use,-runtime/string --linelength=160 wind_plugin.hpp"
                 
     after_script:
