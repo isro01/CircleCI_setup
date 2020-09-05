@@ -46,9 +46,7 @@ class CustomWindPlugin : public ModelPlugin {
         ignition::math::Vector3d force;
         ignition::math::Vector3d torque;
 
-        DynParams(const ignition::math::Vector3d& force, const ignition::math::Vector3d& torque)
-            : force(force)
-            , torque(torque){};
+        DynParams(const ignition::math::Vector3d& force, const ignition::math::Vector3d& torque): force(force), torque(torque){};
 
         DynParams() {
             force = ignition::math::Vector3d::Zero;
@@ -63,7 +61,7 @@ class CustomWindPlugin : public ModelPlugin {
     void onUpdate(const common::UpdateInfo& _info);
     ignition::math::Vector3d interpolateWindDynamics(WindParams params);
     void odometryCallback_(const nav_msgs::Odometry::ConstPtr msg);
-    void QueueThread();
+    void Queuethread();
 
   private:
     // hashing function for wind parameters
