@@ -1,56 +1,44 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-# version: 2.1
-# # Use a package of configuration called an orb.
-# orbs:
-#   # Declare a dependency on the welcome-orb
-#   welcome: circleci/welcome-orb@0.4.1
-# # Orchestrate or schedule a set of jobs
-# workflows:
-#   # Name the workflow "welcome"
-#   welcome:
-#     # Run the welcome/run job in its own container
-#     jobs:
-#       - welcome/run
-
 
 version: 2
 
 jobs:
-  one:
-    docker:
-      - image: circleci/ruby:2.4.1
-
-    steps:
-      - checkout
-      - run: echo "A first h3ll0"
-      - run: mkdir -p my_ws
-      - run: echo "Trying out workspaces" > my_ws/echo-output
-      - persist_to_workspace:
-          root: my_ws
-          paths:
-            - echo-output
-  
-  two:
-    docker:
-      - image: circleci/ruby:2.4.1
+    before_script:
+      docker:
+        - image: circleci/ruby:2.4.1
+      
+      steps:
+        - checkout
+        - run: echo "Executing cppLint"
+        
+    run_cpplint:
+      docker:
+        - image: ubuntu:18.04
     
-    steps:
-      - checkout
-      - run: echo "One more h1 th3r3"
-      - attach_workspace:
-          at: my_ws
-
-      - run: |
-          if [[ $(cat my_ws/echo-output) == "Trying out workspaces" ]]; then echo "It worked!";
-          else
-            echo "Nope!"; exit 1
-          fi
+      steps:
+        - checkout
+        - run: ls -a
+        - run: "apt-get update -y"
+        - run: "apt-get install -y python-pip"
+        - run: "python -m pip install cpplint"
+        - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment,-readability/braces,-build/include_order,-build/c++11,-build/include_what_you_use,-runtime/string --linelength=160 wind_plugin.hpp"
+        # - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment, --linelength=160 wind_plugin.hpp"
+                
+    after_script:
+      docker:
+        - image: circleci/ruby:2.4.1
+    
+      steps:
+        - checkout
+        - run: echo "Execution finished"
 
 workflows:
-  version: 2
-  one_and_two:
-    jobs:
-      - one
-      - two:
-          requires:
-            - one
+    version: 2
+    cpplint:
+      jobs:
+        - before_script
+        - run_cpplint:
+            requires:
+              - before_script
+        - after_script:
+            requires:
+              - run_cpplint
