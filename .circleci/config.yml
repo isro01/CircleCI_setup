@@ -20,8 +20,9 @@ jobs:
         - run: "apt-get update -y"
         - run: "apt-get install -y python-pip"
         - run: "python -m pip install cpplint"
-        - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment,-readability/braces,-build/include_order,-build/c++11,-build/include_what_you_use,-runtime/string --linelength=160 wind_plugin.hpp"
+        # - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment,-readability/braces,-build/include_order,-build/c++11,-build/include_what_you_use,-runtime/string --linelength=160 wind_plugin.hpp"
         # - run: "cpplint --filter=-whitespace,-legal/copyright,-readability/multiline_comment, --linelength=160 wind_plugin.hpp"
+        - run: ". ./test.sh"
                 
     after_script:
       docker:
