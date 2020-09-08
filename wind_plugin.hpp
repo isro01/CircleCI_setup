@@ -25,7 +25,7 @@ class CustomWindPlugin : public ModelPlugin {
     CustomWindPlugin()
         : ModelPlugin()
         , namespace_(kDefaultNamespace)
-        , link_name_(kDefaultLinkName) {
+        , link_name_(kdefaultlinkname) {
     }
 
     typedef struct WindParams {
@@ -37,7 +37,8 @@ class CustomWindPlugin : public ModelPlugin {
             , speed(speed){};
 
         // comparison operator to check hash collisions
-        bool operator==(const WindParams& wind_params) const {return (angle == wind_params.angle) && (speed == wind_params.speed);
+        bool operator==(const WindParams& wind_params) const {
+            return (angle == wind_params.angle) && (speed == wind_params.speed);
         }
     } WindParams;
 
@@ -45,7 +46,9 @@ class CustomWindPlugin : public ModelPlugin {
         ignition::math::Vector3d force;
         ignition::math::Vector3d torque;
 
-        DynParams(const ignition::math::Vector3d& force, const ignition::math::Vector3d& torque): force(force), torque(torque){};
+        DynParams(const ignition::math::Vector3d& force, const ignition::math::Vector3d& torque)
+            : force(force)
+            , torque(torque){};
 
         DynParams() {
             force = ignition::math::Vector3d::Zero;
