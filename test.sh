@@ -26,7 +26,7 @@
 # echo "$A"
 
 declare -a var
-var=($(git diff --name-only HEAD~4))
+var=($(git diff --name-only HEAD~6))
 # echo ${var[2]}
 
 len=${#var[@]}
@@ -35,11 +35,11 @@ echo "$str"
 for((i=0;i<len;i++)); do
     cpplint --filter=-legal/copyright,-readability/multiline_comment,-readability/braces,-build/include_order,-build/c++11,-build/include_what_you_use,-runtime/string,-whitespace/indent,-whitespace/comments,+build/namespace,+readability/constructors --linelength=160 ${var[$i]}
 
-    A="$(cut -d'/' -f1 <<<"${var[$i]}")"
-    if [[ "$A" == *"iarc"* && "$A" != "$str" ]]; then
-        # if [[ "$A" != "$str" ]]; then
-            echo "$A"
-            str="$A"
-        # fi
-    fi
+    # A="$(cut -d'/' -f1 <<<"${var[$i]}")"
+    # if [[ "$A" == *"iarc"* && "$A" != "$str" ]]; then
+    #     # if [[ "$A" != "$str" ]]; then
+    #         echo "$A"
+    #         str="$A"
+    #     # fi
+    # fi
 done

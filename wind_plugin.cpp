@@ -50,6 +50,7 @@ void CustomWindPlugin::Load(physics::ModelPtr parent, sdf::ElementPtr sdf) {
 
     if (!ros::isInitialized()) {
         int argc = 0;
+        
         char** argv = NULL;
         ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
     }
